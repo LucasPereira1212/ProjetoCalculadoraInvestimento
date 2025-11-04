@@ -5,6 +5,8 @@ const finalMoneyChart = document.getElementById("final-money-distribution");
 const progressionChart = document.getElementById("progression");
 const form = document.getElementById("investment-form");
 const clearFormButton = document.getElementById("clear-form");
+let doughnutChartReferece = {};
+let progessionChartReferece = {};
 
 function formatCurrency(valeu) {
   return valeu.toFixed(2);
@@ -15,6 +17,7 @@ function renderProgression(event) {
   if (document.querySelector(".border-2")) {
     return;
   }
+  resetCharts();
   const startingAmount = Number(
     document.getElementById("starting-amount").value.replace(",", ".")
   );
@@ -42,7 +45,7 @@ function renderProgression(event) {
 
   const finalInvestmentObject = returnsArray[returnsArray.length - 1];
 
-  new Chart(finalMoneyChart, {
+  doughnutChartReferece = new Chart(finalMoneyChart, {
     type: "doughnut",
     data: {
       labels: ["Total investido", "Rendimento", "Imposto"],
@@ -68,7 +71,7 @@ function renderProgression(event) {
     },
   });
 
-  new Chart(progressionChart, {
+  progessionChartReferece = new Chart(progressionChart, {
     type: "bar",
     data: {
       labels: returnsArray.map((investimentObject) => investimentObject.month),
@@ -103,12 +106,28 @@ function renderProgression(event) {
   });
 }
 
+function isObjectEmpty(obj) {
+  return Object.keys(obj).length === 0;
+}
+
+function resetCharts() {
+  if (
+    !isObjectEmpty(doughnutChartReferece) &&
+    !isObjectEmpty(progessionChartReferece)
+  ) {
+    doughnutChartReferece.destroy();
+    progessionChartReferece.destroy();
+  }
+}
+
 function clearForm() {
   form["starting-amount"].value = "";
   form["additional-contribution"].value = "";
   form["time-amount"].value = "";
   form["return-rate"].value = "";
   form["tex-rate"].value = "";
+
+  resetCharts();
 
   const errorInputsContainers = document.querySelectorAll(".border-2");
 
