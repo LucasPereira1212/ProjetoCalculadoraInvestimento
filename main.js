@@ -40,7 +40,6 @@ function renderProgression(event) {
     returnRatePeriod
   );
 
-  console.log(returnsArray[returnsArray.length - 1]);
   const finalInvestmentObject = returnsArray[returnsArray.length - 1];
 
   new Chart(finalMoneyChart, {
@@ -66,6 +65,40 @@ function renderProgression(event) {
           hoverOffset: 4,
         },
       ],
+    },
+  });
+
+  new Chart(progressionChart, {
+    type: "bar",
+    data: {
+      labels: returnsArray.map((investimentObject) => investimentObject.month),
+      datasets: [
+        {
+          label: "Total investido",
+          data: returnsArray.map(
+            (investimentObject) => investimentObject.investedAmount
+          ),
+          backgroundColor: "rgb(255, 99, 132)",
+        },
+        {
+          label: "Retorno de investimento",
+          data: returnsArray.map(
+            (investimentObject) => investimentObject.interestReturns
+          ),
+          backgroundColor: "rgb(54, 162, 235)",
+        },
+      ],
+    },
+    options: {
+      responsive: true,
+      scales: {
+        x: {
+          stacked: true,
+        },
+        y: {
+          stacked: true,
+        },
+      },
     },
   });
 }
