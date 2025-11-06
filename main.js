@@ -205,7 +205,7 @@ for (const formElement of form) {
 }
 
 const maiEl = document.querySelector("main");
-const caroselEl = document.getElementById("carousel");
+const caroselEl = document.getElementById("carosel");
 const nextButton = document.getElementById("slide-arrow-next");
 const previousButton = document.getElementById("slide-arrow-previous");
 
