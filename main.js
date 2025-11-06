@@ -8,6 +8,7 @@ const form = document.getElementById("investment-form");
 const clearFormButton = document.getElementById("clear-form");
 let doughnutChartReferece = {};
 let progessionChartReferece = {};
+let tableChartReference = {};
 
 const columnsArray = [
   { columnLabel: "Mês", accessor: "month" },
@@ -46,6 +47,7 @@ function renderProgression(event) {
     return;
   }
   resetCharts();
+  resetTable(tableChartReference);
   const startingAmount = Number(
     document.getElementById("starting-amount").value.replace(",", ".")
   );
@@ -133,7 +135,11 @@ function renderProgression(event) {
     },
   });
 
-  createTable(columnsArray, returnsArray, "results-table");
+  tableChartReference = createTable(
+    columnsArray,
+    returnsArray,
+    "results-table"
+  );
 }
 
 function isObjectEmpty(obj) {
@@ -150,6 +156,15 @@ function resetCharts() {
   }
 }
 
+function resetTable(tableReference) {
+  if (tableReference.nodeName === "TABLE") {
+    tableReference.querySelector("thead").remove();
+    tableReference.querySelector("tbody").remove();
+  } else {
+    return;
+  }
+}
+
 function clearForm() {
   form["starting-amount"].value = "";
   form["additional-contribution"].value = "";
@@ -158,6 +173,7 @@ function clearForm() {
   form["tex-rate"].value = "";
 
   resetCharts();
+  resetTable(tableChartReference);
 
   const errorInputsContainers = document.querySelectorAll(".border-2");
 

@@ -18,6 +18,8 @@ export const createTable = (collunsArray, dataArray, tableId) => {
 
   createTableHeader(tableElement, collunsArray);
   createTableBody(tableElement, dataArray, collunsArray);
+
+  return tableElement;
 };
 
 function createTableHeader(tableReference, columnsArray) {
@@ -61,6 +63,6 @@ function createTableBody(tableReference, tableItems, columnsArray) {
         tableItem[tableColums.accessor]
       )}</td>`;
     }
-    tableReference.appendChild(tableRow);
+    tableBodyReference.appendChild(tableRow);
   }
 }
